@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import Icons from 'react-native-vector-icons/MaterialIcons'
+import IconPlay from 'assets/icons/DE-play-button.png';
 
 const backgroundColor = 'transparent'
 
@@ -22,12 +23,18 @@ const PlayButton = props => (
     <TouchableOpacity
       onPress={() => props.onPress()}
     >
-      <Icons
-        style={styles.playButton}
-        name={props.paused ? 'play-circle-outline' : 'pause-circle-outline'}
-        color={props.theme}
-        size={75}
-      />
+      {(props.paused) && (
+        <Icons
+          style={styles.playButton}
+          name={props.paused ? 'play-circle-outline' : 'pause-circle-outline'}
+          color={props.theme}
+          size={75}
+          />
+      )}
+      {(!props.paused) && (
+        <Image source={IconPlay} />
+      )}
+
     </TouchableOpacity>
   </View>
 )
