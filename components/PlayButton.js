@@ -25,24 +25,24 @@ const styles = StyleSheet.create({
 
 const PlayButton = props => (
   <View style={styles.playContainer}>
-<TouchableOpacity
-onPress={() => props.onPress()}
->
-<Icons
-style={!props.paused ? styles.pauseButton : {display: 'none'}}
-name={props.paused ? 'play-circle-outline' : 'pause-circle-outline'}
-color={props.theme}
-size={75}
-/>
-{(props.paused) && (
-<Image
-  style={styles.playButton}
-  source={IconPlay}
-  />
-)}
+    <TouchableOpacity
+      onPress={() => props.onPress()}
+    >
+      <Icons
+        style={!props.paused ? styles.pauseButton : {display: 'none'}}
+        name={props.paused ? 'play-circle-outline' : 'pause-circle-outline'}
+        color={props.theme}
+        size={75}
+      />
+        {(props.paused) && (
+          <Image
+            style={styles.playButton}
+            source={IconPlay}
+          />
+        )}
 
-</TouchableOpacity>
-</View>
+    </TouchableOpacity>
+  </View>
 )
 
 PlayButton.propTypes = {

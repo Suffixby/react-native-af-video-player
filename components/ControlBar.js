@@ -35,7 +35,7 @@ const ControlBar = (props) => {
         onSeekRelease={pos => onSeekRelease(pos)}
         progress={progress}
         theme={{ scrubberThumb: theme.scrubberThumb, scrubberBar: theme.scrubberBar }}
-      />
+        />
       <ToggleIcon
         paddingLeft
         theme={theme.volume}
@@ -45,8 +45,8 @@ const ControlBar = (props) => {
         iconOn="volume-mute"
         size={20}
       />
-      <Time time={duration} theme={theme.duration} />
-      { !inlineOnly || !hideFullScreenControl &&
+     <Time time={duration} theme={theme.duration} />
+    { true &&
       <ToggleIcon
         paddingRight
         onPress={() => props.toggleFS()}
@@ -54,7 +54,8 @@ const ControlBar = (props) => {
         iconOn="fullscreen-exit"
         isOn={fullscreen}
         theme={theme.fullscreen}
-      />}
+      />
+    }
     </LinearGradient>
   )
 }

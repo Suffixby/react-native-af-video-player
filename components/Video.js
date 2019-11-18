@@ -67,7 +67,7 @@ class Video extends Component {
       renderError: false
     }
     this.animInline = new Animated.Value(Win.width * 0.5625)
-    this.animFullscreen = new Animated.Value(Win.width * 0.5625)
+    this.animFullscreen = new Animated.Value(Win.height * 0.5625)
     this.BackHandler = this.BackHandler.bind(this)
     this.onRotated = this.onRotated.bind(this)
   }
@@ -133,30 +133,30 @@ class Video extends Component {
 
   onRotated({ window: { width, height } }) {
     // Add this condition incase if inline and fullscreen options are turned on
-    if (this.props.inlineOnly) return
-    const orientation = width > height ? 'LANDSCAPE' : 'PORTRAIT'
-    if (this.props.rotateToFullScreen) {
-      if (orientation === 'LANDSCAPE') {
-        this.setState({ fullScreen: true }, () => {
-          this.animToFullscreen(height)
-          this.props.onFullScreen(this.state.fullScreen)
-        })
-        return
-      }
-      if (orientation === 'PORTRAIT') {
-        this.setState({
-          fullScreen: false,
-          paused: this.props.fullScreenOnly || this.state.paused
-        }, () => {
-          this.animToInline()
-          if (this.props.fullScreenOnly) this.props.onPlay(!this.state.paused)
-          this.props.onFullScreen(this.state.fullScreen)
-        })
-        return
-      }
-    } else {
-      this.animToInline()
-    }
+    // if (this.props.inlineOnly) return
+    // const orientation = width > height ? 'LANDSCAPE' : 'PORTRAIT'
+    // if (this.props.rotateToFullScreen) {
+    //   if (orientation === 'LANDSCAPE') {
+    //     this.setState({ fullScreen: true }, () => {
+    //       this.animToFullscreen(height)
+    //       this.props.onFullScreen(this.state.fullScreen)
+    //     })
+    //     return
+    //   }
+    //   if (orientation === 'PORTRAIT') {
+    //     this.setState({
+    //       fullScreen: false,
+    //       paused: this.props.fullScreenOnly || this.state.paused
+    //     }, () => {
+    //       this.animToInline()
+    //       if (this.props.fullScreenOnly) this.props.onPlay(!this.state.paused)
+    //       this.props.onFullScreen(this.state.fullScreen)
+    //     })
+    //     return
+    //   }
+    // } else {
+    //   this.animToInline()
+    // }
     if (this.state.fullScreen) this.animToFullscreen(height)
   }
 
@@ -312,17 +312,17 @@ class Video extends Component {
     const textStyle = { color: 'white', padding: 10 }
     return (
       <Animated.View
-        style={[styles.background, fullScreen ? styles.fullScreen : inline]}
-      >
-        <Text style={textStyle}>Retry</Text>
-        <Icons
-          name="replay"
-          size={60}
-          color={this.props.theme}
-          onPress={() => this.setState({ renderError: false })}
-        />
-      </Animated.View>
-    )
+    style={[styles.background, fullScreen ? styles.fullScreen : inline]}
+  >
+  <Text style={textStyle}>Retry</Text>
+      <Icons
+    name="replay"
+    size={60}
+    color={this.props.theme}
+    onPress={() => this.setState({ renderError: false })}
+    />
+    </Animated.View>
+  )
   }
 
   renderPlayer() {
@@ -369,65 +369,65 @@ class Video extends Component {
 
     return (
       <Animated.View
-        style={[
-          styles.background,
-          fullScreen ?
-            (styles.fullScreen, { height: this.animFullscreen })
-            : { height: this.animInline },
-          fullScreen ? null : style
-        ]}
-      >
-        <StatusBar hidden={fullScreen} />
-        {
-          ((loading && placeholder) || currentTime < 0.01) &&
-          <Image resizeMode="cover" style={styles.image} {...checkSource(placeholder)} />
-        }
-        <VideoPlayer
-          {...checkSource(url)}
-          paused={paused}
-          resizeMode={resizeMode}
-          repeat={loop}
-          style={fullScreen ? styles.fullScreen : inline}
-          ref={(ref) => { this.player = ref }}
-          rate={rate}
-          volume={volume}
-          muted={muted}
-          playInBackground={playInBackground} // Audio continues to play when app entering background.
-          playWhenInactive={playWhenInactive} // [iOS] Video continues to play when control or notification center are shown.
-          // progressUpdateInterval={250.0}          // [iOS] Interval to fire onProgress (default to ~250ms)
-          onLoadStart={() => this.onLoadStart()} // Callback when video starts to load
-          onLoad={e => this.onLoad(e)} // Callback when video loads
-          onProgress={e => this.progress(e)} // Callback every ~250ms with currentTime
-          onEnd={() => this.onEnd()}
-          onError={e => this.onError(e)}
-          // onBuffer={() => this.onBuffer()} // Callback when remote video is buffering
-          onTimedMetadata={e => onTimedMetadata(e)} // Callback when the stream receive some metadata
-        />
-        <Controls
-          ref={(ref) => { this.controls = ref }}
-          toggleMute={() => this.toggleMute()}
-          toggleFS={() => this.toggleFS()}
-          togglePlay={() => this.togglePlay()}
-          paused={paused}
-          muted={muted}
-          fullscreen={fullScreen}
-          loading={loading}
-          onSeek={val => this.seek(val)}
-          onSeekRelease={pos => this.onSeekRelease(pos)}
-          progress={progress}
-          currentTime={currentTime}
-          duration={duration}
-          logo={logo}
-          title={title}
-          more={!!onMorePress}
-          onMorePress={() => onMorePress()}
-          theme={setTheme}
-          inlineOnly={inlineOnly}
-          controlDuration={controlDuration}
-          hideFullScreenControl={hideFullScreenControl}
-        />
-      </Animated.View>
-    )
+    style={[
+        styles.background,
+      fullScreen ?
+        (styles.fullScreen, { height: this.animFullscreen })
+        : { height: this.animInline },
+      fullScreen ? null : style
+  ]}
+  >
+  <StatusBar hidden={fullScreen} />
+    {
+      ((loading && placeholder) || currentTime < 0.01) &&
+      <Image resizeMode="cover" style={styles.image} {...checkSource(placeholder)} />
+    }
+  <VideoPlayer
+    {...checkSource(url)}
+    paused={paused}
+    resizeMode={resizeMode}
+    repeat={loop}
+    style={fullScreen ? styles.fullScreen : inline}
+    ref={(ref) => { this.player = ref }}
+    rate={rate}
+    volume={volume}
+    muted={muted}
+    playInBackground={playInBackground} // Audio continues to play when app entering background.
+    playWhenInactive={playWhenInactive} // [iOS] Video continues to play when control or notification center are shown.
+    // progressUpdateInterval={250.0}          // [iOS] Interval to fire onProgress (default to ~250ms)
+    onLoadStart={() => this.onLoadStart()} // Callback when video starts to load
+    onLoad={e => this.onLoad(e)} // Callback when video loads
+    onProgress={e => this.progress(e)} // Callback every ~250ms with currentTime
+    onEnd={() => this.onEnd()}
+    onError={e => this.onError(e)}
+    // onBuffer={() => this.onBuffer()} // Callback when remote video is buffering
+    onTimedMetadata={e => onTimedMetadata(e)} // Callback when the stream receive some metadata
+    />
+    <Controls
+    ref={(ref) => { this.controls = ref }}
+    toggleMute={() => this.toggleMute()}
+    toggleFS={() => this.toggleFS()}
+    togglePlay={() => this.togglePlay()}
+    paused={paused}
+    muted={muted}
+    fullscreen={fullScreen}
+    loading={loading}
+    onSeek={val => this.seek(val)}
+    onSeekRelease={pos => this.onSeekRelease(pos)}
+    progress={progress}
+    currentTime={currentTime}
+    duration={duration}
+    logo={logo}
+    title={title}
+    more={!!onMorePress}
+    onMorePress={() => onMorePress()}
+    theme={setTheme}
+    inlineOnly={inlineOnly}
+    controlDuration={controlDuration}
+    hideFullScreenControl={hideFullScreenControl}
+    />
+    </Animated.View>
+  )
   }
 
   render() {
